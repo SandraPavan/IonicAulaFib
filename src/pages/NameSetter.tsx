@@ -1,18 +1,29 @@
-import React, { useState, useRef } from 'react'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonText, IonButton, IonInput } from '@ionic/react'
+import { IonButton, IonInput, IonText } from '@ionic/react'
+import React, { useRef, useState } from 'react'
 
-const NameSetter: React.FC = () => { 
+type NameSetterProps = {
+    initialValue: string
+    placeholder: string
+    buttonTitle: string
+    onNameSet?: (name: string) => void
+}
 
+const NameSetter: React.FC<NameSetterProps> = (
+    {initialValue, placeholder, buttonTitle, onNameSet}: NameSetterProps
+) => { 
     const inputRef = useRef<HTMLIonInputElement>(null)
-    const [title,setTitle] = useState('Esse é seu nome')
+    const [title,setTitle] = useState(initialValue)
 
     return <div style = {{
         marginTop: '10px',
         border: 'solid 1px black'
     }}>        
           <IonText>{title}</IonText>
-          <IonInput ref={inputRef} type="text" placeholder="Digite seu nome" ></IonInput>
-          <IonButton onClick={() => { setTitle(inputRef.current!.value ?? '')}}>Definir</IonButton>
+          <IonInput ref={inputRef} type="text" placeholder={placeholder} ></IonInput>
+          <IonButton onClick={() => { setTitle(inputRef.current!.value ?? '') 
+          if (onNameSet){
+              onNameSet(inputRef.current!.value ?? '')
+          }}}>{buttonTitle}</IonButton>
     </div>
     }
 export default NameSetter;
