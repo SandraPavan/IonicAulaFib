@@ -17,6 +17,7 @@ const Home: React.FC = () => {
           placeholder="Seu nome"
           buttonTitle="Definir seu nome"
         />
+        <ContextualNameList/>
       </IonContent>
     </IonPage>
   );

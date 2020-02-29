@@ -29,19 +29,27 @@ export const AppContextProvider: React.FC<React.PropsWithChildren<{}>> = ({
     const reducer = useReducer(
         (state: AppData, { action }: AppDataAction): AppData => {
             switch(action.type){
-                case 'add':
-                    return {
+                case 'add': {
+                    const newState =  {
                         ...state,
                         names: [action.nameToInsert,
                         ...state.names]
                     }
-                case 'delete':
+                    Storage.set({key: 'appContext', value: JSON.stringify(newState)}).catch(() => {})
+                    return newState
+                }
+
+                case 'delete': {
                     const newNames = [...state.names]
                     newNames.splice(action.indexToDelete, 1)    
-                    return{
+                    const newState = {
                         ...state,
                         names: newNames
                     }
+                    Storage.set({key: 'appContext', value: JSON.stringify(newState)}).catch(() => {})
+                    return newState
+                }
+                
                 case 'initialize':
                     return action.state
                 }
@@ -56,7 +64,7 @@ export const AppContextProvider: React.FC<React.PropsWithChildren<{}>> = ({
             const state: AppData = JSON.parse(value.value)
 
             reducer[1]({action: {type: 'initialize', state}})
-            
+
             }).catch(()=>{})
     }, [])
 
