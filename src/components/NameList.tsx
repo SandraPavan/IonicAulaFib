@@ -29,7 +29,7 @@ const NameList: React.FC<NameListProps> = ({
             </IonList>
             <IonAlert isOpen={alertVisible} onDidDismiss={() => setAlertVisible(false)}
             header='Confirmar'
-            message='Deseja remover esse nome?'
+            message='Deseja alterar esse nome?'
             buttons={[
                 'Não',{
                     text: 'Sim',
